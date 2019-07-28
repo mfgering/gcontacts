@@ -20,12 +20,12 @@ def main():
 		rdr = csv.reader(google_csvfile, delimiter=',', quotechar='"')
 		hdr = next(rdr)
 		for row in rdr:
+			print(", ".join(row))
 			google_contact = {}
 			for col_num in range(0, len(hdr)):
 				google_contact[hdr[col_num]] = row[col_num]
 			postbox_contact = google_map.handle_google_contact(google_contact)
 			wrtr.writerow(postbox_contact)
-		
 
 if __name__ == '__main__':
 	main()
