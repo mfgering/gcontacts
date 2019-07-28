@@ -10,10 +10,10 @@ def main():
 	parser.add_argument('google', help="Google contacts in csv file input")
 	parser.add_argument('--postbox', help="Postbox csv file output")
 	args = parser.parse_args()
-	with open(args.google, newline='') as google_csvfile:
+	with open(args.google, newline='', encoding="utf-8") as google_csvfile:
 		post_file = sys.stdout
 		if args.postbox:
-			post_file = open(args.postbox, "w", newline='')
+			post_file = open(args.postbox, "w", newline='', encoding="utf-8")
 		#wrtr = csv.writer(post_file, delimiter=',', quotechar='"')
 		wrtr = csv.DictWriter(post_file, postbox_map.postbox_fields,)
 		wrtr.writeheader()
