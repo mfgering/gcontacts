@@ -20,7 +20,7 @@ def main():
 		rdr = csv.reader(google_csvfile, delimiter=',', quotechar='"')
 		hdr = next(rdr)
 		for row in rdr:
-			print(", ".join(row))
+			#print(", ".join(row))
 			google_contact = {}
 			for col_num in range(0, len(hdr)):
 				google_contact[hdr[col_num]] = row[col_num]
