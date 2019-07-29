@@ -1,14 +1,11 @@
 # Mapping for Google contact info
 
-def map_name(name, google_contact, postbox_contact):
-	first_name = google_contact['First Name']
-	if google_contact['Middle Name']:
-		first_name += ' '+google_contact['Middle Name']
-	postbox_contact['Display Name'] = first_name+' '+google_contact['Last Name']
-	postbox_contact['First Name'] = first_name
-	postbox_contact['Last Name'] = google_contact['Last Name']
+def google_map_name(name, google_contact, postbox_contact):
+	postbox_contact['Display Name'] = google_contact['Name']
+	postbox_contact['First Name'] = google_contact['Given Name']
+	postbox_contact['Last Name'] = google_contact['Family Name']
 
-def map_birthday(name, google_contact, postbox_contact):
+def google_outlook_map_birthday(name, google_contact, postbox_contact):
 	if google_contact[name]:
 		parts = google_contact[name].split('/')
 		if len(parts) >= 1:
@@ -18,14 +15,88 @@ def map_birthday(name, google_contact, postbox_contact):
 				if len(parts) >= 3:
 					postbox_contact['Birth Year'] = parts[2]
 
-def map_primary_phone(name, google_contact, postbox_contact):
+# This map is for the Google export to Google format
+google_google2postbox_map = {
+	'Name': google_map_name,
+	'Given Name': None,
+	'Additional Name': None,
+	'Family Name': None,
+	'Yomi Name': None,
+	'Given Name Yomi': None,
+	'Additional Name Yomi': None,
+	'Family Name Yomi': None,
+	'Name Prefix': None,
+	'Name Suffix': None,
+	'Initials': None,
+	'Nickname': None,
+	'Short Name': None,
+	'Maiden Name': None,
+	'Birthday': google_outlook_map_birthday,
+	'Gender': None,
+	'Location': None,
+	'Billing Information': None,
+	'Directory Server': None,
+	'Mileage': None,
+	'Occupation': None,
+	'Hobby': None,
+	'Sensitivity': None,
+	'Priority': None,
+	'Subject': None,
+	'Notes': 'Notes',
+	'Language': None,
+	'Photo': None,
+	'Group Membership': None,
+	'E-mail 1 - Type': None,
+	'E-mail 1 - Value': 'Primary Email',
+	'Phone 1 - Type': None,
+	'Phone 1 - Value': None,
+	'Phone 2 - Type': None,
+	'Phone 2 - Value': None,
+	'Address 1 - Type': None,
+	'Address 1 - Formatted': None,
+	'Address 1 - Street': None,
+	'Address 1 - City': None,
+	'Address 1 - PO Box': None,
+	'Address 1 - Region': None,
+	'Address 1 - Postal Code': None,
+	'Address 1 - Country': None,
+	'Address 1 - Extended Address': None,
+	'Address 2 - Type': None,
+	'Address 2 - Formatted': None,
+	'Address 2 - Street': None,
+	'Address 2 - City': None,
+	'Address 2 - PO Box': None,
+	'Address 2 - Region': None,
+	'Address 2 - Postal Code': None,
+	'Address 2 - Country': None,
+	'Address 2 - Extended Address': None,
+	'Organization 1 - Type': None,
+	'Organization 1 - Name': None,
+	'Organization 1 - Yomi Name': None,
+	'Organization 1 - Title': None,
+	'Organization 1 - Department': None,
+	'Organization 1 - Symbol': None,
+	'Organization 1 - Location': None,
+	'Organization 1 - Job Description': None,
+}
+
+def outlook_map_name(name, google_contact, postbox_contact):
+	first_name = google_contact['First Name']
+	if google_contact['Middle Name']:
+		first_name += ' '+google_contact['Middle Name']
+	postbox_contact['Display Name'] = first_name+' '+google_contact['Last Name']
+	postbox_contact['First Name'] = first_name
+	postbox_contact['Last Name'] = google_contact['Last Name']
+
+def outlook_map_primary_phone(name, google_contact, postbox_contact):
 	if google_contact[name]:
 		postbox_contact['Home Phone'] = google_contact[name]
 	if google_contact['Home Phone']:
 		postbox_contact['Home Phone'] = google_contact['Home Phone']
 
-google2postbox_map = {
-	'First Name': map_name,
+# This map is for the Google export to Outlook format
+google_outlook2postbox_map = {
+	'First Name': outlook_map_name,
 	'Middle Name': None,
 	'Last Name': None,
 	'Title': None,
@@ -33,7 +104,7 @@ google2postbox_map = {
 	'Initials': None,
 	'Web Page': 'Web Page 1',
 	'Gender': None,
-	'Birthday': map_birthday,
+	'Birthday': google_outlook_map_birthday,
 	'Anniversary': None,
 	'Location': None,
 	'Language': None,
@@ -42,7 +113,7 @@ google2postbox_map = {
 	'E-mail Address': 'Primary Email',
 	'E-mail 2 Address': 'Secondary Email',
 	'E-mail 3 Address': None,
-	'Primary Phone': map_primary_phone,
+	'Primary Phone': outlook_map_primary_phone,
 	'Home Phone': None,
 	'Home Phone 2': None,
 	'Mobile Phone': 'Mobile Number',
@@ -114,12 +185,97 @@ google2postbox_map = {
 	'Private': None,
 	'Categories': None,
 	}
-
-def handle_google_field(google_field_name, google_contact, postbox_contact):
-	if not google_field_name in google2postbox_map:
+	'Name': None,
+	'Given Name': None,
+	'Additional Name': None,
+	'Family Name': None,
+	'Yomi Name': None,
+	'Given Name Yomi': None,
+	'Additional Name Yomi': None,
+	'Family Name Yomi': None,
+	'Name Prefix': None,
+	'Name Suffix': None,
+	'Initials': None,
+	'Nickname': None,
+	'Short Name': None,
+	'Maiden Name': None,
+	'Birthday': None,
+	'Gender': None,
+	'Location': None,
+	'Billing Information': None,
+	'Directory Server': None,
+	'Mileage': None,
+	'Occupation': None,
+	'Hobby': None,
+	'Sensitivity': None,
+	'Priority': None,
+	'Subject': None,
+	'Notes': None,
+	'Language': None,
+	'Photo': None,
+	'Group Membership': None,
+	'E-mail 1 - Type': None,
+	'E-mail 1 - Value': None,
+	'E-mail 2 - Type': None,
+	'E-mail 2 - Value': None,
+	'E-mail 3 - Type': None,
+	'E-mail 3 - Value': None,
+	'E-mail 4 - Type': None,
+	'E-mail 4 - Value': None,
+	'Phone 1 - Type': None,
+	'Phone 1 - Value': None,
+	'Phone 2 - Type': None,
+	'Phone 2 - Value': None,
+	'Phone 3 - Type': None,
+	'Phone 3 - Value': None,
+	'Address 1 - Type': None,
+	'Address 1 - Formatted': None,
+	'Address 1 - Street': None,
+	'Address 1 - City': None,
+	'Address 1 - PO Box': None,
+	'Address 1 - Region': None,
+	'Address 1 - Postal Code': None,
+	'Address 1 - Country': None,
+	'Address 1 - Extended Address': None,
+	'Address 2 - Type': None,
+	'Address 2 - Formatted': None,
+	'Address 2 - Street': None,
+	'Address 2 - City': None,
+	'Address 2 - PO Box': None,
+	'Address 2 - Region': None,
+	'Address 2 - Postal Code': None,
+	'Address 2 - Country': None,
+	'Address 2 - Extended Address': None,
+	'Address 3 - Type': None,
+	'Address 3 - Formatted': None,
+	'Address 3 - Street': None,
+	'Address 3 - City': None,
+	'Address 3 - PO Box': None,
+	'Address 3 - Region': None,
+	'Address 3 - Postal Code': None,
+	'Address 3 - Country': None,
+	'Address 3 - Extended Address': None,
+	'Organization 1 - Type': None,
+	'Organization 1 - Name': None,
+	'Organization 1 - Yomi Name': None,
+	'Organization 1 - Title': None,
+	'Organization 1 - Department': None,
+	'Organization 1 - Symbol': None,
+	'Organization 1 - Location': None,
+	'Organization 1 - Job Description': None,
+	'Website 1 - Type': None,
+	'Website 1 - Value': None,
+	'Custom Field 1 - Type': None,
+	'Custom Field 1 - Value': None,
+def handle_google_field(csv_format, google_field_name, google_contact, postbox_contact):
+	if csv_format == 'google':
+		google_map = google_google2postbox_map
+	else:
+		google_map = google_outlook2postbox_map
+	if not google_field_name in google_map:
 		print("Error: missing mapping for "+google_field_name)
 		return
-	target = google2postbox_map[google_field_name]
+	target = google_map[google_field_name]
 	if target is not None:
 		if callable(target):
 			target(google_field_name, google_contact, postbox_contact)
@@ -128,8 +284,8 @@ def handle_google_field(google_field_name, google_contact, postbox_contact):
 		else:
 			print("FAIL")
 
-def handle_google_contact(google_contact):
+def handle_google_contact(csv_format, google_contact):
 	postbox_contact = {}
 	for field_name in google_contact:
-		handle_google_field(field_name, google_contact, postbox_contact)
+		handle_google_field(csv_format, field_name, google_contact, postbox_contact)
 	return postbox_contact
