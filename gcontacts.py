@@ -25,14 +25,8 @@ def main():
 		#hdr = next(rdr)
 		for google_contact in rdr:
 			postbox_contact = google_map.handle_google_contact(csv_format, google_contact)
-			wrtr.writerow(postbox_contact)			
-		# for row in rdr:
-		# 	#print(", ".join(row))
-		# 	google_contact = {}
-		# 	for col_num in range(0, len(hdr)):
-		# 		google_contact[hdr[col_num]] = row[col_num]
-		# 	postbox_contact = google_map.handle_google_contact(csv_format, google_contact)
-		# 	wrtr.writerow(postbox_contact)
+			if 'Primary Email' in postbox_contact and len(postbox_contact['Primary Email']) > 0:
+				wrtr.writerow(postbox_contact)
 
 if __name__ == '__main__':
 	main()
