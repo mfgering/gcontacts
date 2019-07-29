@@ -3,7 +3,8 @@
 def map_name(name, google_contact, postbox_contact):
 	first_name = google_contact['First Name']
 	if google_contact['Middle Name']:
-		first_name += google_contact['Middle Name']
+		first_name += ' '+google_contact['Middle Name']
+	postbox_contact['Display Name'] = first_name+' '+google_contact['Last Name']
 	postbox_contact['First Name'] = first_name
 	postbox_contact['Last Name'] = google_contact['Last Name']
 
@@ -22,13 +23,6 @@ def map_primary_phone(name, google_contact, postbox_contact):
 		postbox_contact['Home Phone'] = google_contact[name]
 	if google_contact['Home Phone']:
 		postbox_contact['Home Phone'] = google_contact['Home Phone']
-
-def map_home_address(name, google_contact, postbox_contact):
-	print("field {} is missing".format(name))
-
-def map_business_address(name, google_contact, postbox_contact):
-	print("field {} is missing".format(name))
-
 
 google2postbox_map = {
 	'First Name': map_name,
@@ -54,9 +48,9 @@ google2postbox_map = {
 	'Mobile Phone': 'Mobile Number',
 	'Pager': None,
 	'Home Fax': 'Fax Number',
-	'Home Address': map_home_address,
+	'Home Address': 'Home Address',
 	'Home Street': None,
-	'Home Street 2': None,
+	'Home Street 2': 'Home Address 2',
 	'Home Street 3': None,
 	'Home Address PO Box': None,
 	'Home City': 'Home City',
@@ -80,9 +74,9 @@ google2postbox_map = {
 	'Organizational ID Number': None,
 	'Profession': None,
 	'Account': None,
-	'Business Address': map_business_address,
+	'Business Address': 'Work Address',
 	'Business Street': None,
-	'Business Street 2': None,
+	'Business Street 2': 'Work Address 2',
 	'Business Street 3': None,
 	'Business Address PO Box': None,
 	'Business City': 'Work City',
